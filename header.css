@@ -1,0 +1,33 @@
+.modal-overlay {
+    position: fixed;
+   
+    
+    display: flex;
+    justify-content: space-between;
+    margin-left: 1070px;
+    margin-top: 190px;
+    font-size: 14px;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+   justify-content: center;
+    width: 250px;
+  }
+  
+  button {
+    padding: 8px 16px;
+   background-color: white;
+    color: rgb(63, 62, 62);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover {
+   color: black;
+   font-weight: bold;
+   
+  }
+  

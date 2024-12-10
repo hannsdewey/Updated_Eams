@@ -7,7 +7,7 @@ const Sidebar = () => {
 
   const sections = [
     {
-      title: null, // No title for the top-level Dashboard
+      title: "MAIN MENU",
       items: [
         {
           id: 1,
@@ -15,11 +15,6 @@ const Sidebar = () => {
           icon: "fa fa-home",
           path: "/dashboard",
         },
-      ],
-    },
-    {
-      title: "MAIN MENU",
-      items: [
         {
           id: 2,
           label: "Attendance",
@@ -54,17 +49,6 @@ const Sidebar = () => {
           label: "Reports",
           icon: "fa fa-chart-line",
           path: "/reports",
-        },
-      ],
-    },
-    {
-      title: "SETTINGS",
-      items: [
-        {
-          id: 7,
-          label: "Settings",
-          icon: "fa fa-cogs",
-          path: "/settings",
         },
       ],
     },

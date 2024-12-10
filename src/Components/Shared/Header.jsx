@@ -46,7 +46,13 @@ const Header = () => {
       }}
     >
       {/* Left part: Title or other items */}
-      <h3 style={{ color: "blue", fontSize: "20px", fontWeight: "bold" }}>
+      <h3
+        style={{
+          color: "blue",
+          fontSize: "15px",
+          fontWeight: "bold",
+        }}
+      >
         Raddacon Call Center
       </h3>
 
@@ -86,7 +92,9 @@ const Header = () => {
         </div>
 
         {/* Profile Icon */}
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{ display: "flex", alignItems: "center", marginRight: "5px" }}
+        >
           {/* If user profile is available, show user's avatar */}
           {user ? (
             <img

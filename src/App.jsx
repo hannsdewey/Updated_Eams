@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "./Components/Shared/Sidebar";
 import Header from "./Components/Shared/Header";
-import Dashboard from "./Components/Employee/Dashboard";
+import Dashboard from "./Components/Employee/dashboard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -15,12 +15,12 @@ function App() {
         {/* Main panel for routes */}
         <div
           style={{
-            marginLeft: "250px", // Sidebar width
+            marginLeft: "200px", // Sidebar width
             width: "100%",
           }}
         >
           <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
             <Route
               path="/attendance"
               element={<h2>Attendance Page Content</h2>}

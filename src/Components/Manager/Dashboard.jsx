@@ -2,19 +2,22 @@ import React, { useState, useEffect } from "react";
 
 const Dashboard = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [status, setStatus] = useState("Clock In"); // Dynamic status: Clock In or Clock Out
+  const [status, setStatus] = useState("Clock In");
 
-  // Update time every second
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
-    return () => clearInterval(intervalId); // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
   }, []);
 
-  // Format time and date
   const formattedTime = currentTime.toLocaleTimeString();
   const formattedDate = currentTime.toLocaleDateString();
+
+  // Toggle clock status when clicked
+  const toggleStatus = () => {
+    setStatus(prevStatus => (prevStatus === "Clock In" ? "Clock Out" : "Clock In"));
+  };
 
   return (
     <div
@@ -55,7 +58,7 @@ const Dashboard = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "15px", // Adds spacing between clock and status
+              gap: "15px",
             }}
           >
             {/* Time Section */}
@@ -75,6 +78,7 @@ const Dashboard = () => {
 
             {/* Clock In/Out Status */}
             <div
+              onClick={toggleStatus} // Toggle status on click
               style={{
                 padding: "8px 16px",
                 backgroundColor: status === "Clock In" ? "#4caf50" : "#f44336",
@@ -84,6 +88,7 @@ const Dashboard = () => {
                 fontWeight: "bold",
                 textAlign: "center",
                 minWidth: "100px",
+                cursor: "pointer", // Makes it appear clickable
               }}
             >
               {status}
@@ -101,4 +106,4 @@ const Dashboard = () => {
   );
 };
 
-export default DashboardM;
+export default Dashboard;

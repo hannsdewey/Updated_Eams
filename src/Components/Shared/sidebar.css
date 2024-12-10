@@ -1,28 +1,89 @@
-.sidebar-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: blue;
-  text-align: center;
-  margin-bottom: 30px;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%; /* Ensure the body fills the viewport */
 }
 
-.nav-item {
+.sidebar {
+  position: fixed;
+  top: 48px; /* Start at the top of the viewport */
+  height: 100%; /* Fill the entire height of the viewport */
+  width: 200px;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align items to the top */
+}
+
+.sidebar-section {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.sidebar-section-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-item {
   margin-bottom: 10px;
 }
 
-.nav-link {
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-decoration: none;
   color: black;
   padding: 10px;
-  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
   transition: background-color 0.2s, color 0.2s;
 }
 
-.nav-item.active .nav-link {
+.sidebar-link:hover {
   background-color: rgba(0, 0, 255, 0.1);
   color: blue;
-  font-weight: bold;
 }
 
-.nav-link:hover {
-  background-color: rgba(0, 0, 255, 0.05);
+.sidebar-icon {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.sidebar-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.sidebar-item.active .sidebar-link {
+  background-color: rgba(0, 0, 255, 0.1);
+  color: blue;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #f8f9fa;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1100;
 }

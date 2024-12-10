@@ -10,25 +10,20 @@ const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // For toggling modal visibility
 
   useEffect(() => {
-    // Simulating API call for notifications and user profile
     fetchNotifications();
     fetchUserProfile();
   }, []);
 
-  // Fetch notifications from your backend API
   const fetchNotifications = async () => {
-    // Replace with real API call to fetch notifications
     const response = await fetch("/api/notifications");
     const data = await response.json();
-    setNotifications(data.notifications); // Assuming the response contains a notifications array
+    setNotifications(data.notifications);
   };
 
-  // Fetch user profile from your backend API
   const fetchUserProfile = async () => {
-    // Replace with real API call to fetch user profile
     const response = await fetch("/api/user");
     const data = await response.json();
-    setUser(data); // Assuming the response contains user data
+    setUser(data);
   };
 
   // Function to toggle the modal visibility
@@ -52,12 +47,16 @@ const Header = () => {
         zIndex: 1000,
       }}
     >
-      {/* Left part: Title or other items */}
-      <h3 style={{ color: "blue", fontSize: "20px", fontWeight: "bold" }}>
+      <h3
+        style={{
+          color: "blue",
+          fontSize: "15px",
+          fontWeight: "bold",
+        }}
+      >
         Raddacon Call Center
       </h3>
 
-      {/* Right part: Notification & Profile */}
       <div style={{ display: "flex", alignItems: "center" }}>
         {/* Notifications Icon */}
         <div
@@ -67,7 +66,10 @@ const Header = () => {
             cursor: "pointer",
           }}
         >
-          <i className="fa fa-bell" style={{ fontSize: "24px", color: "#000" }}></i>
+          <i
+            className="fa fa-bell"
+            style={{ fontSize: "24px", color: "#000" }}
+          ></i>
           {notifications.length > 0 && (
             <span
               style={{
@@ -89,12 +91,24 @@ const Header = () => {
           )}
         </div>
 
+        {/* Settings Icon (added) */}
+        <div
+          style={{
+            marginRight: "20px",
+            cursor: "pointer",
+          }}
+        >
+          <i
+            className="fa fa-cogs"
+            style={{ fontSize: "20px", color: "#000" }}
+          ></i>
+        </div>
+
         {/* Profile Icon */}
         <div style={{ display: "flex", alignItems: "center" }}>
-          {/* If user profile is available, show user's avatar */}
           {user ? (
             <img
-              src={user.profilePicture} // Assuming `profilePicture` is the user's profile image URL
+              src={user.profilePicture}
               alt="Profile"
               style={{
                 width: "32px",
@@ -108,7 +122,7 @@ const Header = () => {
             <i
               className="fa fa-user-circle"
               style={{
-                fontSize: "24px",
+                fontSize: "20px",
                 color: "#000",
                 cursor: "pointer",
               }}

@@ -2,17 +2,15 @@ import React, { useState, useEffect } from "react";
 
 const Dashboard = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [status, setStatus] = useState("Clock In"); // Dynamic status: Clock In or Clock Out
+  const [status, setStatus] = useState("Clock In");
 
-  // Update time every second
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
-    return () => clearInterval(intervalId); // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
   }, []);
 
-  // Format time and date
   const formattedTime = currentTime.toLocaleTimeString();
   const formattedDate = currentTime.toLocaleDateString();
 
@@ -60,7 +58,7 @@ const Dashboard = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "15px", // Adds spacing between clock and status
+              gap: "15px",
             }}
           >
             {/* Time Section */}

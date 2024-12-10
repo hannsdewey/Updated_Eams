@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
+import "./header.css"; // Import the CSS for modal styling
 
 const Header = () => {
   // State to track notifications and user data
   const [notifications, setNotifications] = useState([]);
   const [user, setUser] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // For toggling modal visibility
 
   useEffect(() => {
     // Simulating API call for notifications and user profile
@@ -27,6 +29,11 @@ const Header = () => {
     const response = await fetch("/api/user");
     const data = await response.json();
     setUser(data); // Assuming the response contains user data
+  };
+
+  // Function to toggle the modal visibility
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
 
   return (
@@ -60,10 +67,7 @@ const Header = () => {
             cursor: "pointer",
           }}
         >
-          <i
-            className="fa fa-bell"
-            style={{ fontSize: "24px", color: "#000" }}
-          ></i>
+          <i className="fa fa-bell" style={{ fontSize: "24px", color: "#000" }}></i>
           {notifications.length > 0 && (
             <span
               style={{
@@ -98,6 +102,7 @@ const Header = () => {
                 borderRadius: "50%",
                 cursor: "pointer",
               }}
+              onClick={toggleModal} // Open modal when avatar is clicked
             />
           ) : (
             <i
@@ -107,10 +112,23 @@ const Header = () => {
                 color: "#000",
                 cursor: "pointer",
               }}
+              onClick={toggleModal} // Open modal when icon is clicked
             ></i>
           )}
         </div>
       </div>
+
+      {/* Modal for user information */}
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={toggleModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          
+            <button onClick={toggleModal}>View Profile</button>
+            <button onClick={toggleModal}>Settings</button>
+            <button onClick={toggleModal}>Logout</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

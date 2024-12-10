@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-const Dashboard = () => {
+const LeaveRequest = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [status, setStatus] = useState("Clock In"); // Dynamic status: Clock In or Clock Out
+  const [status, setStatus] = useState("Submit Leave Request"); // Dynamic status
 
   // Update time every second
   useEffect(() => {
@@ -16,9 +16,9 @@ const Dashboard = () => {
   const formattedTime = currentTime.toLocaleTimeString();
   const formattedDate = currentTime.toLocaleDateString();
 
-  // Toggle clock status when clicked
+  // Toggle status
   const toggleStatus = () => {
-    setStatus(prevStatus => (prevStatus === "Clock In" ? "Clock Out" : "Clock In"));
+    setStatus((prevStatus) => (prevStatus === "Submit Leave Request" ? "Cancel Leave Request" : "Submit Leave Request"));
   };
 
   return (
@@ -30,7 +30,7 @@ const Dashboard = () => {
         width: "100%",
       }}
     >
-      {/* Dashboard Header */}
+      {/* LeaveRequest Header */}
       <div
         style={{
           backgroundColor: "#f8f9fa",
@@ -51,16 +51,16 @@ const Dashboard = () => {
           <div>
             <h4 style={{ margin: 0 }}>Hello, John Doe</h4>
             <p style={{ fontSize: "14px", color: "gray", marginTop: "5px" }}>
-              Welcome back to the Raddacon Call Center
+              Submit a Leave Request or Cancel
             </p>
           </div>
 
-          {/* Right Section: Clock and Clock In/Out */}
+          {/* Right Section: Clock and Status */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "15px", // Adds spacing between clock and status
+              gap: "15px",
             }}
           >
             {/* Time Section */}
@@ -78,20 +78,20 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Clock In/Out Status */}
+            {/* LeaveRequest Status */}
             <div
-              onClick={toggleStatus} // Toggle status on click
               style={{
                 padding: "8px 16px",
-                backgroundColor: status === "Clock In" ? "#4caf50" : "#f44336",
+                backgroundColor: status === "Submit Leave Request" ? "#2196f3" : "#f44336",
                 color: "white",
                 borderRadius: "5px",
                 fontSize: "14px",
                 fontWeight: "bold",
                 textAlign: "center",
-                minWidth: "100px",
-                cursor: "pointer", // Makes it appear clickable
+                minWidth: "150px",
+                cursor: "pointer", // Makes the status button clickable
               }}
+              onClick={toggleStatus} // Toggle status on click
             >
               {status}
             </div>
@@ -99,13 +99,13 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Dashboard Main Content */}
+      {/* LeaveRequest Main Content */}
       <div>
-        <h3></h3>
-        <p></p>
+        <h3>Leave Request Section</h3>
+        <p>Click the button above to submit or cancel your leave request.</p>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default LeaveRequest;

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import "./header.css"; // Import the CSS for modal styling
+import { useNavigate } from "react-router-dom"; // Import useNavigate for routing
 
 const Header = () => {
-  // State to track notifications and user data
   const [notifications, setNotifications] = useState([]);
   const [user, setUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // For toggling modal visibility
+
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     fetchNotifications();
@@ -26,9 +28,25 @@ const Header = () => {
     setUser(data);
   };
 
-  // Function to toggle the modal visibility
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  // Navigation handlers for modal buttons
+  const goToProfile = () => {
+    navigate("/profile"); // Navigate to the profile page
+    toggleModal(); // Close the modal
+  };
+
+  const goToSettings = () => {
+    navigate("/settings"); // Navigate to the settings page
+    toggleModal(); // Close the modal
+  };
+
+  const logout = () => {
+    // Implement logout logic here (e.g., clear user data, redirect to login)
+    navigate("/login"); // Redirect to login page
+    toggleModal(); // Close the modal
   };
 
   return (
@@ -91,7 +109,7 @@ const Header = () => {
           )}
         </div>
 
-        {/* Settings Icon (added) */}
+        {/* Settings Icon */}
         <div
           style={{
             marginRight: "20px",
@@ -136,10 +154,9 @@ const Header = () => {
       {isModalOpen && (
         <div className="modal-overlay" onClick={toggleModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          
-            <button onClick={toggleModal}>View Profile</button>
-            <button onClick={toggleModal}>Settings</button>
-            <button onClick={toggleModal}>Logout</button>
+            <button onClick={goToProfile}>View Profile</button>
+            <button onClick={goToSettings}>Settings</button>
+            <button onClick={logout}>Logout</button>
           </div>
         </div>
       )}

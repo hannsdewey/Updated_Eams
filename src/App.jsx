@@ -13,11 +13,9 @@ import Shiftschedule from "./Components/Manager/Shiftschedule";
 function App() {
   return (
     <Router>
-      {/* Header component */}
       <Header />
       
       <div style={{ display: "flex" }}>
-        {/* Sidebar remains fixed */}
         <Sidebar />
 
         {/* Main panel for routes */}
@@ -30,7 +28,7 @@ function App() {
         >
           <Routes>
             {/* Redirect root path to Dashboard */}
-            <Route path="/" element={<Navigate to="/dashboard" />} />
+           
             
             {/* Define application routes */}
             <Route path="/dashboard" element={<Dashboard />} />

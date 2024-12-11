@@ -10,4 +10,4 @@ const Report = () => {
   );
 };
 
-export default Loginf;
+export default Report;

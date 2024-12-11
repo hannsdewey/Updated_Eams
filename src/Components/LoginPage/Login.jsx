@@ -72,4 +72,4 @@ function App() {
   );
 }
 
-export default Loginf;
+export default Login;

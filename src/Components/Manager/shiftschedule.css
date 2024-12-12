@@ -1,0 +1,144 @@
+.calendar-container {
+    font-family: Arial, sans-serif;
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+  }
+  
+  .calendar-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+  }
+  
+  .calendar-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .calendar-dropdown {
+    padding: 8px;
+    border: none; /* Remove border */
+    background-color: transparent; /* Ensure background blends with the design */
+    font-size: 0.9em;
+    cursor: pointer;
+    outline: none; /* Prevent border on focus/click */
+  }
+  
+  .calendar-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+  }
+  
+  .calendar-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .calendar-grid {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #ddd;
+    width: 100%;
+  }
+  
+  .calendar-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f0f0f0;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .calendar-day-header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1em;
+    color: #333;
+  }
+  
+  .calendar-days-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+  }
+  
+  .calendar-day {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 80px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    background-color: #f7f7f7;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    padding: 8px;
+    position: relative;
+  }
+  
+  .calendar-day .day-number {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 1.2em;
+    font-weight: normal;
+    color: #333;
+  }
+  
+  .calendar-day.empty {
+    background-color: transparent;
+    border: none;
+    cursor: default;
+  }
+  
+  .calendar-day:hover {
+    background-color: #dfeeff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .react-select__control {
+    border: none; /* Remove border */
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 1em;
+    width: 250px;
+    background-color: transparent;
+    outline: none; /* Prevent border on focus/click */
+    box-shadow: none; /* Prevent shadow when active */
+  }
+  
+  .react-select__menu {
+    max-height: 300px; /* Adjust for scrollable dropdown */
+    overflow-y: auto;
+    border: 1px solid #ddd; /* Optional: Add a subtle border for the dropdown list */
+    border-radius: 4px;
+  }
+  
+  .react-select__option {
+    padding: 10px;
+    background-color: #fff; /* Default background */
+  }
+  
+  .react-select__option:hover {
+    background-color: #dfeeff; /* Highlight on hover */
+  }

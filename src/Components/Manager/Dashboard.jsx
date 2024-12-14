@@ -17,6 +17,14 @@ const Dashboard = () => {
   // Toggle clock status when clicked
   const toggleStatus = () => {
     setStatus(prevStatus => (prevStatus === "Clock In" ? "Clock Out" : "Clock In"));
+    <div class="modal-dialog modal-dialog-centered">
+  ... style={{
+        marginLeft: "center",
+        marginTop: "3rem", // Sidebar width
+        padding: "20px",
+        width: "100%",
+  }}
+</div>
   };
 
   return (

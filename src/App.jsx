@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+
 import Sidebar from "./Components/Shared/Sidebar";
 import Header from "./Components/Shared/Header";
 import Dashboard from "./Components/Manager/Dashboard";
@@ -9,6 +10,8 @@ import Inbox from "./Components/Manager/Inbox";
 import Report from "./Components/Manager/Report";
 import Settings from "./Components/Manager/Settings";
 import Shiftschedule from "./Components/Manager/Shiftschedule";
+
+
 
 function App() {
   return (
@@ -28,7 +31,7 @@ function App() {
         >
           <Routes>
             {/* Redirect root path to Dashboard */}
-           
+            
             
             {/* Define application routes */}
             <Route path="/dashboard" element={<Dashboard />} />

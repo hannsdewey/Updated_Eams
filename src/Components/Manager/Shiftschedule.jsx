@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
@@ -9,10 +9,21 @@ const ShiftSchedule = () => {
     month: new Date().getMonth(),
     year: new Date().getFullYear(),
   });
-  const [showModal, setShowModal] = useState(false); // State for modal visibility
-  const [assignee, setAssignee] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const [scheduleDate, setScheduleDate] = useState('');
   const [scheduleTime, setScheduleTime] = useState('');
+  const [holidays, setHolidays] = useState([]);
+  const [selectedEmployees, setSelectedEmployees] = useState([]);
+  const [shiftCreated, setShiftCreated] = useState(false);
+
+  // Mock data for employee names (replace with actual database in real app)
+  const employees = [
+    { id: 1, name: 'John Doe' },
+    { id: 2, name: 'Jane Smith' },
+    { id: 3, name: 'Alex Johnson' },
+    { id: 4, name: 'Emily Davis' },
+    { id: 5, name: 'Michael Brown' },
+  ];
 
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -28,8 +39,45 @@ const ShiftSchedule = () => {
     }))
   );
 
+  // Fetch holidays using Calendarific API
+  const fetchHolidays = async () => {
+    try {
+      const year = selectedDate.year;
+      const month = selectedDate.month + 1; // Calendar months are 1-based
+      const response = await fetch(
+        `https://calendarific.com/api/v2/holidays?api_key=YOUR_API_KEY&country=PH&year=${year}&month=${month}`
+      );
+      if (!response.ok) {
+        throw new Error('Failed to fetch holidays');
+      }
+      const data = await response.json();
+      setHolidays(data.response.holidays || []);
+    } catch (error) {
+      console.error('Error fetching holidays:', error);
+      setHolidays([]); // Handle the error gracefully
+    }
+  };
+
+  // UseEffect to fetch holidays whenever the selected month/year changes
+  useEffect(() => {
+    fetchHolidays();
+  }, [selectedDate]);
+
+  // Check if the given day is a holiday
+  const isHoliday = (date) => {
+    return holidays.some((holiday) => holiday.date === date);
+  };
+
   const handleDateChange = (selectedOption) => {
     setSelectedDate(selectedOption.value);
+  };
+
+  const handleEmployeeSelection = (id) => {
+    setSelectedEmployees((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((employeeId) => employeeId !== id) // Unselect if already selected
+        : [...prevSelected, id] // Select if not selected
+    );
   };
 
   const renderDays = () => {
@@ -42,13 +90,30 @@ const ShiftSchedule = () => {
       days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
     }
     for (let i = 1; i <= daysInMonth; i++) {
+      const dayString = `${year}-${month + 1 < 10 ? '0' + (month + 1) : month + 1}-${i < 10 ? '0' + i : i}`;
       days.push(
-        <div key={i} className="calendar-day">
+        <div key={i} className={`calendar-day ${isHoliday(dayString) ? 'holiday' : ''}`}>
           <span className="day-number">{i}</span>
+          {isHoliday(dayString) && <a href="https://www.timeanddate.com/holidays/philippines" target="_blank" rel="noopener noreferrer">Holiday Info</a>}
         </div>
       );
     }
     return days;
+  };
+
+  // Handle saving the shift (e.g., store the shift data or trigger API)
+  const handleCreateShift = () => {
+    if (scheduleDate && scheduleTime && selectedEmployees.length > 0) {
+      // Save shift logic (e.g., API call, state update)
+      console.log('Shift Created:', {
+        scheduleDate,
+        scheduleTime,
+        employees: selectedEmployees,
+      });
+      setShiftCreated(true);
+    } else {
+      alert('Please fill out all fields and select at least one employee.');
+    }
   };
 
   return (
@@ -66,92 +131,35 @@ const ShiftSchedule = () => {
             className="calendar-dropdown"
             isSearchable={false}
           />
-          <button
-            className="calendar-btn"
-            onClick={() => setShowModal(true)} // Open the modal
-          >
-            Create Shift
-          </button>
+          <button className="calendar-btn" onClick={() => setShowModal(true)}>Create Shift</button>
         </div>
       </div>
+
       <div className="calendar-grid">
         <div className="calendar-days-header">
-          {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map(
-            (day) => (
-              <div key={day} className="calendar-day-header">
-                {day}
-              </div>
-            )
-          )}
+          {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day) => (
+            <div key={day} className="calendar-day-header">{day}</div>
+          ))}
         </div>
         <div className="calendar-days-container">{renderDays()}</div>
       </div>
 
       {/* Full-Screen Bootstrap Modal */}
       {showModal && (
-        <div
-          className="modal fade show"
-          tabIndex="-1"
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'fixed', // Position the modal to cover the full screen
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.7)', // Semi-transparent black background
-            zIndex: 1050, // Make sure modal is on top
-            overflow: 'hidden', // Prevent scrolling
-          }}
-        >
-          <div
-            className="modal-dialog"
-            style={{
-              width: '463px',
-              height: '590px', // Auto height for responsiveness
-              margin: 'auto', // Ensure it stays centered
-            }}
-          >
+        <div className="modal fade show" tabIndex="-1" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.7)', zIndex: 1050 }}>
+          <div className="modal-dialog" style={{ width: '463px', height: '590px', margin: 'auto' }}>
             <div className="modal-content" style={{ height: '100%' }}>
-              {/* Modal Header (No Close Button) */}
-              <div
-  className="modal-header"
-  style={{
-    borderBottom: 'none', // Remove line under the header
-    justifyContent: 'left', // Center the modal title
-    textAlign: 'left', // Center the text of both header and subheader
-    padding: '10px 0', // Add some padding for spacing
-    marginLeft: '30px',
-  }}
->
-  <div>
-    <h5 className="modal-title">Create Shift</h5>
-    <h6>Set Employee Schedules with Ease</h6> {/* Subheader */}
-  </div>
-</div>
+              {/* Modal Header */}
+              <div className="modal-header" style={{ borderBottom: 'none', justifyContent: 'left', padding: '10px 0', marginLeft: '30px' }}>
+                <div>
+                  <h5 className="modal-title">Create Shift</h5>
+                  <h6>Set Employee Schedules with Ease</h6>
+                </div>
+              </div>
               {/* Modal Body */}
               <div className="modal-body">
-               
-                {/* Assignee */}
-                <div className="mb-3">
-                  <label htmlFor="assignee" className="form-label" style={{ fontWeight: 'bold', fontSize: 'medium' }}>
-                    Assignee
-                  </label>
-                  <input
-                    type="text"
-                    id="assignee"
-                    className="form-control"
-                    value={assignee}
-                    onChange={(e) => setAssignee(e.target.value)}
-                    placeholder="Enter Employee Name"
-                  />
-                </div>
-
-                {/* Schedule Date */}
-                <div className="mb-3">
-                  <label htmlFor="scheduleDate" className="form-label" style={{ fontWeight: 'bold', fontSize: 'medium' }}>
+                <div className="mb-3 d-flex align-items-center">
+                  <label htmlFor="scheduleDate" className="form-label mb-0" style={{ fontWeight: 'bold', fontSize: '14px', width: '150px' }}>
                     Set Schedule Date
                   </label>
                   <input
@@ -160,12 +168,13 @@ const ShiftSchedule = () => {
                     className="form-control"
                     value={scheduleDate}
                     onChange={(e) => setScheduleDate(e.target.value)}
+                    style={{ flex: 1 }}
                   />
                 </div>
 
                 {/* Schedule Time */}
-                <div className="mb-3">
-                  <label htmlFor="scheduleTime" className="form-label" style={{ fontWeight: 'bold', fontSize: 'medium' }}>
+                <div className="mb-3 d-flex align-items-center">
+                  <label htmlFor="scheduleTime" className="form-label mb-0" style={{ fontWeight: 'bold', fontSize: '14px', width: '150px' }}>
                     Set Schedule Time
                   </label>
                   <input
@@ -174,25 +183,48 @@ const ShiftSchedule = () => {
                     className="form-control"
                     value={scheduleTime}
                     onChange={(e) => setScheduleTime(e.target.value)}
+                    style={{ flex: 1 }}
                   />
+                </div>
+
+                {/* Awaiting Scheduling */}
+                <div className="mb-3">
+                  <label htmlFor="search" className="form-label mb-0" style={{ fontWeight: 'bold', fontSize: '14px' }}>
+                    Awaiting Scheduling
+                  </label>
+
+                  {/* Employee Selection Table */}
+                  <table className="table">
+                    <thead>
+                      
+                    </thead>
+                    <tbody>
+                      {employees.map((employee) => (
+                        <tr key={employee.id}>
+                          <td>{employee.name}</td>
+                          <td>
+                            <input
+                            
+                              type="checkbox"
+                              id={`employee-${employee.id}`}
+                              checked={selectedEmployees.includes(employee.id)}
+                              onChange={() => handleEmployeeSelection(employee.id)}
+                              style={{ fontSize: '6px'}}
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
 
               {/* Modal Footer */}
-              <div
-                className="modal-footer"
-                style={{
-                  borderTop: 'none', // Remove line above the footer
-                }}
-              >
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setShowModal(false)} // Close the modal
-                >
+              <div className="modal-footer" style={{ borderTop: 'none' }}>
+                <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
                   Close
                 </button>
-                <button type="button" className="btn btn-primary">
+                <button type="button" className="btn btn-primary" onClick={handleCreateShift}>
                   Save Shift
                 </button>
               </div>

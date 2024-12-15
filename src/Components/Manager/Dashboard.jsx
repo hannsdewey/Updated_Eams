@@ -1,13 +1,32 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Dashboard = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [status, setStatus] = useState("Clock In");
+  
+  // State to store data from the API
+  const [dashboardData, setDashboardData] = useState({
+    totalTeamEmployees: 0,
+    activeShift: 0,
+    presentEmployeesToday: 0,
+    pendingLeaveRequests: 0,
+  });
 
+  // Fetch data from backend API
   useEffect(() => {
+    axios.get("http://localhost:5000/api/dashboard")  // Change the URL to your backend
+      .then((response) => {
+        setDashboardData(response.data); // Set the data in state
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the dashboard data!", error);
+      });
+
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
+
     return () => clearInterval(intervalId);
   }, []);
 
@@ -16,22 +35,14 @@ const Dashboard = () => {
 
   // Toggle clock status when clicked
   const toggleStatus = () => {
-    setStatus(prevStatus => (prevStatus === "Clock In" ? "Clock Out" : "Clock In"));
-    <div class="modal-dialog modal-dialog-centered">
-  ... style={{
-        marginLeft: "center",
-        marginTop: "3rem", // Sidebar width
-        padding: "20px",
-        width: "100%",
-  }}
-</div>
+    setStatus((prevStatus) => (prevStatus === "Clock In" ? "Clock Out" : "Clock In"));
   };
 
   return (
     <div
       style={{
         marginLeft: "0",
-        marginTop: "3rem", // Sidebar width
+        marginTop: "1.5rem", // Sidebar width
         padding: "20px",
         width: "100%",
       }}
@@ -106,9 +117,95 @@ const Dashboard = () => {
       </div>
 
       {/* Dashboard Main Content */}
-      <div>
-        <h3></h3>
-        <p></p>
+      <div
+        style={{
+          display: "flex",
+         marginBottom: "12px",
+          gap: "20px",
+          flexWrap: "wrap",
+        }}
+      >
+        {/* Total Team Employees Section */}
+        <div
+          style={{
+            width: "22%",
+            padding: "20px",
+            backgroundColor: "#ffffff",
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+            textAlign: "center",
+          }}
+        >
+          <p style={{ fontSize: "30px", fontWeight: "bold" }}>
+            {dashboardData.totalTeamEmployees}
+          </p>
+          <h5 style={{ fontSize: "18px", fontWeight: "normal" }}>Total Team Employees</h5>
+        </div>
+
+        {/* Active Shift Section */}
+        <div
+          style={{
+            width: "22%",
+            padding: "20px",
+            backgroundColor: "#ffffff",
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+            textAlign: "center",
+          }}
+        >
+          <p style={{ fontSize: "30px", fontWeight: "bold" }}>
+            {dashboardData.activeShift}
+          </p>
+          <h5 style={{ fontSize: "18px", fontWeight: "normal" }}>Active Shift</h5>
+        </div>
+      </div>
+
+      {/* Lower Section (Present Employees and Pending Leave Requests) */}
+      <div
+        style={{
+          display: "flex",
+        
+          gap: "20px",
+          flexWrap: "wrap",
+        }}
+      >
+        {/* Present Employees Today Section */}
+        <div
+          style={{
+            width: "22%",
+            padding: "20px",
+            backgroundColor: "#ffffff",
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+            textAlign: "center",
+          }}
+        >
+          <p style={{ fontSize: "30px", fontWeight: "bold" }}>
+            {dashboardData.presentEmployeesToday}
+          </p>
+          <h5 style={{ fontSize: "18px", fontWeight: "normal" }}>Present Employees Today</h5>
+        </div>
+
+        {/* Pending Leave Requests Section */}
+        <div
+          style={{
+            width: "22%",
+            padding: "20px",
+            backgroundColor: "#ffffff",
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+            textAlign: "center",
+          }}
+        >
+          <p style={{ fontSize: "30px", fontWeight: "bold" }}>
+            {dashboardData.pendingLeaveRequests}
+          </p>
+          <h5 style={{ fontSize: "18px", fontWeight: "normal" }}>Pending Leave Requests</h5>
+        </div>
       </div>
     </div>
   );

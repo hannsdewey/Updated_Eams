@@ -213,7 +213,7 @@ const ShiftSchedule = () => {
                             />
                           </td>
                         </tr>
-                      ))}
+                      ))} 
                     </tbody>
                   </table>
                 </div>

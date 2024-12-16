@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import "./header.css"; // Import the CSS for modal styling
@@ -8,6 +9,7 @@ const Header = () => {
   const [notifications, setNotifications] = useState([]);
   const [user, setUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // For toggling modal visibility
+  const navigate = useNavigate(); // Initialize useNavigate for programmatic navigation
 
   useEffect(() => {
     fetchNotifications();
@@ -29,6 +31,11 @@ const Header = () => {
   // Function to toggle the modal visibility
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  // Navigate to Settings page
+  const goToSettings = () => {
+    navigate("/settings"); // Navigate to /settings route
   };
 
   return (
@@ -91,12 +98,13 @@ const Header = () => {
           )}
         </div>
 
-        {/* Settings Icon (added) */}
+        {/* Settings Icon */}
         <div
           style={{
             marginRight: "20px",
             cursor: "pointer",
           }}
+          onClick={goToSettings} // Navigate to settings page on click
         >
           <i
             className="fa fa-cogs"
@@ -136,9 +144,7 @@ const Header = () => {
       {isModalOpen && (
         <div className="modal-overlay" onClick={toggleModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          
             <button onClick={toggleModal}>View Profile</button>
-            <button onClick={toggleModal}>Settings</button>
             <button onClick={toggleModal}>Logout</button>
           </div>
         </div>

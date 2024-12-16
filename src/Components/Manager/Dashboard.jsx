@@ -42,7 +42,7 @@ const Dashboard = () => {
     <div
       style={{
         marginLeft: "0",
-        marginTop: "1.5rem", // Sidebar width
+        marginTop: "1rem", // Sidebar width
         padding: "20px",
         width: "100%",
       }}
@@ -55,6 +55,7 @@ const Dashboard = () => {
           marginBottom: "20px",
           borderRadius: "8px",
           boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+          
         }}
       >
         <div
@@ -120,7 +121,7 @@ const Dashboard = () => {
       <div
         style={{
           display: "flex",
-         marginBottom: "12px",
+          justifyContent: "space-between",
           gap: "20px",
           flexWrap: "wrap",
         }}
@@ -128,83 +129,81 @@ const Dashboard = () => {
         {/* Total Team Employees Section */}
         <div
           style={{
-            width: "22%",
+            width: "20%",
             padding: "20px",
             backgroundColor: "#ffffff",
             border: "1px solid #ddd",
             borderRadius: "8px",
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
             textAlign: "center",
+            border: "2px solid #1D4ED8", // Blue border
           }}
         >
+          
           <p style={{ fontSize: "30px", fontWeight: "bold" }}>
             {dashboardData.totalTeamEmployees}
           </p>
-          <h5 style={{ fontSize: "18px", fontWeight: "normal" }}>Total Team Employees</h5>
+          <h5 style={{ fontSize: "18px"}}>Total Team Employees</h5>
         </div>
 
         {/* Active Shift Section */}
         <div
           style={{
-            width: "22%",
+            width: "20%",
             padding: "20px",
             backgroundColor: "#ffffff",
             border: "1px solid #ddd",
             borderRadius: "8px",
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
             textAlign: "center",
+            border: "2px solid #1D4ED8",
           }}
         >
+          
           <p style={{ fontSize: "30px", fontWeight: "bold" }}>
             {dashboardData.activeShift}
           </p>
-          <h5 style={{ fontSize: "18px", fontWeight: "normal" }}>Active Shift</h5>
+          <h5  style={{ fontSize: "18px" }}>Active Shift</h5>
         </div>
-      </div>
 
-      {/* Lower Section (Present Employees and Pending Leave Requests) */}
-      <div
-        style={{
-          display: "flex",
-        
-          gap: "20px",
-          flexWrap: "wrap",
-        }}
-      >
         {/* Present Employees Today Section */}
         <div
           style={{
-            width: "22%",
+            width: "20%",
             padding: "20px",
             backgroundColor: "#ffffff",
             border: "1px solid #ddd",
             borderRadius: "8px",
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
             textAlign: "center",
+            border: "2px solid #1D4ED8",
           }}
         >
+        
           <p style={{ fontSize: "30px", fontWeight: "bold" }}>
             {dashboardData.presentEmployeesToday}
           </p>
-          <h5 style={{ fontSize: "18px", fontWeight: "normal" }}>Present Employees Today</h5>
+          <h5 style={{ fontSize: "18px"}}>Present Employees Today</h5>
         </div>
 
         {/* Pending Leave Requests Section */}
         <div
           style={{
-            width: "22%",
+            width: "20%",
             padding: "20px",
             backgroundColor: "#ffffff",
             border: "1px solid #ddd",
             borderRadius: "8px",
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
             textAlign: "center",
+            border: "2px solid #1D4ED8",
           }}
         >
+
           <p style={{ fontSize: "30px", fontWeight: "bold" }}>
             {dashboardData.pendingLeaveRequests}
           </p>
-          <h5 style={{ fontSize: "18px", fontWeight: "normal" }}>Pending Leave Requests</h5>
+          <h5  style={{ fontSize: "18px" }}>Pending Leave Requests</h5>
         </div>
       </div>
     </div>

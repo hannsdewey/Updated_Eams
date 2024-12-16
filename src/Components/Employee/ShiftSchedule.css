@@ -1,0 +1,20 @@
+.fc .fc-toolbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.fc .fc-button {
+  background-color: #6495ed !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  margin: 0 5px !important;
+  font-size: 0.85rem !important;
+  transition: background-color 0.2s ease; /* Smooth transition for hover */
+}
+
+.fc .fc-button:hover {
+  background-color: #4169e1 !important; /* Darker blue shade */
+  cursor: pointer;
+}

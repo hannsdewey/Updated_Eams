@@ -29,7 +29,7 @@ const Sidebar = () => {
         },
         {
           id: 4,
-          label: "Leave Request",
+          label: "Request",
           icon: "fa fa-file-alt",
           path: "/leave-request",
         },

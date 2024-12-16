@@ -16,7 +16,9 @@ const Dashboard = () => {
 
   // Toggle clock status when clicked
   const toggleStatus = () => {
-    setStatus(prevStatus => (prevStatus === "Clock In" ? "Clock Out" : "Clock In"));
+    setStatus((prevStatus) =>
+      prevStatus === "Clock In" ? "Clock Out" : "Clock In"
+    );
   };
 
   return (
@@ -48,7 +50,13 @@ const Dashboard = () => {
           {/* Left Section: Greeting */}
           <div>
             <h4 style={{ margin: 0 }}>Hello, John Doe</h4>
-            <p style={{ fontSize: "14px", color: "gray", marginTop: "5px" }}>
+            <p
+              style={{
+                fontSize: "14px",
+                color: "blue",
+                marginTop: "5px",
+              }}
+            >
               Welcome back to the Raddacon Call Center
             </p>
           </div>

@@ -1,110 +1,248 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import {
+  Typography,
+  Box,
+  Card,
+  CardContent,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Modal,
+  TextField,
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
 const LeaveRequest = () => {
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [status, setStatus] = useState("Submit Leave Request"); // Dynamic status
+  const [requestType, setRequestType] = useState(""); // Dropdown state
+  const [openModal, setOpenModal] = useState(false); // Modal visibility
+  const [modalContent, setModalContent] = useState(""); // Modal content
 
-  // Update time every second
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-    return () => clearInterval(intervalId); // Cleanup interval on unmount
-  }, []);
-
-  // Format time and date
-  const formattedTime = currentTime.toLocaleTimeString();
-  const formattedDate = currentTime.toLocaleDateString();
-
-  // Toggle status
-  const toggleStatus = () => {
-    setStatus((prevStatus) => (prevStatus === "Submit Leave Request" ? "Cancel Leave Request" : "Submit Leave Request"));
+  // Handle dropdown change
+  const handleRequestChange = (event) => {
+    const value = event.target.value;
+    setRequestType(value);
+    setModalContent(value);
+    setOpenModal(true); // Open modal on selection
   };
 
-  return (
-    <div
-      style={{
-        marginLeft: "0",
-        marginTop: "3rem", // Sidebar width
-        padding: "20px",
-        width: "100%",
+  // Handle modal close
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const createCard = (title, content, subtitle) => (
+    <Card
+      sx={{
+        width: "18rem",
+        height: "8rem",
+        backgroundColor: "white",
+        boxShadow: 3,
+        color: "black",
+        marginBottom: "1rem",
       }}
     >
-      {/* LeaveRequest Header */}
-      <div
-        style={{
-          backgroundColor: "#f8f9fa",
-          padding: "15px 20px",
-          marginBottom: "20px",
-          borderRadius: "8px",
-          boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          {/* Left Section: Greeting */}
-          <div>
-            <h4 style={{ margin: 0 }}>Hello, John Doe</h4>
-            <p style={{ fontSize: "14px", color: "gray", marginTop: "5px" }}>
-              Submit a Leave Request or Cancel
-            </p>
-          </div>
+      <CardContent>
+        <Typography variant="h5" fontWeight="bold">
+          {title}
+        </Typography>
+        <Typography variant="body2" fontWeight="bold">
+          {content}
+        </Typography>
+        {subtitle && (
+          <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+            {subtitle}
+          </Typography>
+        )}
+      </CardContent>
+    </Card>
+  );
 
-          {/* Right Section: Clock and Status */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "15px",
+  const columns = [
+    { field: "id", headerName: "ID", width: 50 },
+    { field: "status", headerName: "Status", width: 110 },
+    { field: "name", headerName: "Name", width: 110 },
+    { field: "leaveType", headerName: "Leave Type", width: 110 },
+    { field: "duration", headerName: "Duration", width: 110 },
+    { field: "datefrom", headerName: "Date From", width: 110 },
+    { field: "dateto", headerName: "Date To", width: 110 },
+    { field: "notes", headerName: "Notes", width: 110 },
+    { field: "addedon", headerName: "Added On", width: 110 },
+  ];
+
+  const rows = [
+    {
+      id: 1,
+      name: "John Doe",
+      leaveType: "Sick Leave",
+      status: "Pending",
+      duration: "72 Hours",
+      datefrom: "11-09-2024",
+      dateto: "11-12-2024",
+      notes: "I have medical appointment",
+      addedon: "11-05-2024",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      leaveType: "Vacation",
+      status: "Approved",
+      duration: "72 Hours",
+      datefrom: "11-09-2024",
+      dateto: "11-12-2024",
+      notes: "We have a family vacation",
+      addedon: "11-05-2024",
+    },
+    {
+      id: 3,
+      name: "Bob Brown",
+      leaveType: "Personal Leave",
+      status: "Rejected",
+      duration: "72 Hours",
+      datefrom: "11-09-2024",
+      dateto: "11-12-2024",
+      notes: "To have some fun",
+      addedon: "11-05-2024",
+    },
+  ];
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        boxSizing: "border-box",
+      }}
+    >
+      {/* Header Section */}
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        marginTop="3rem"
+      >
+        <Typography variant="h4" component="h1" color="blue" fontWeight="bold">
+          Leave Request
+        </Typography>
+        <FormControl sx={{ minWidth: 90 }}>
+          <InputLabel
+            id="request-select-label"
+            sx={{
+              fontSize: "0.75rem", // Smaller placeholder text
+              lineHeight: "1.5",
             }}
           >
-            {/* Time Section */}
-            <div>
-              <div
-                style={{
-                  fontSize: "18px",
-                  fontWeight: "bold",
-                }}
-              >
-                {formattedTime}
-              </div>
-              <div style={{ fontSize: "12px", color: "gray" }}>
-                {formattedDate}
-              </div>
-            </div>
+            Request
+          </InputLabel>
+          <Select
+            labelId="request-select-label"
+            value={requestType}
+            onChange={handleRequestChange}
+            label="Request"
+            sx={{
+              fontSize: "0.875rem", // Dropdown text size
+              height: "3rem", // Smaller dropdown height
+            }}
+          >
+            <MenuItem value="Overtime">Overtime</MenuItem>
+            <MenuItem value="Leave">Leave</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
-            {/* LeaveRequest Status */}
-            <div
-              style={{
-                padding: "8px 16px",
-                backgroundColor: status === "Submit Leave Request" ? "#2196f3" : "#f44336",
-                color: "white",
-                borderRadius: "5px",
-                fontSize: "14px",
-                fontWeight: "bold",
-                textAlign: "center",
-                minWidth: "150px",
-                cursor: "pointer", // Makes the status button clickable
-              }}
-              onClick={toggleStatus} // Toggle status on click
+      <Typography
+        variant="subtitle2"
+        component="p"
+        color="blue"
+        marginBottom="1rem"
+      >
+        About your leave & overtime request
+      </Typography>
+
+      {/* Cards Section */}
+      <Box display="flex" justifyContent="center" alignItems="center" gap={5}>
+        {createCard("5", "Days Available", "to submit leave")}
+        {createCard("3", "Pending Request", "Awaiting manager approval")}
+        {createCard("0", "Days Upcoming", "0 days taken")}
+      </Box>
+
+      <Typography
+        variant="subtitle2"
+        component="p"
+        color="blue"
+        marginBottom="1rem"
+      >
+        Leave Request Summary
+      </Typography>
+
+      {/* DataGrid Section */}
+      <Box sx={{ flexGrow: 1 }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          checkboxSelection
+          disableRowSelectionOnClick
+          autoHeight
+        />
+      </Box>
+
+      {/* Modal */}
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-title" variant="h6" component="h2">
+            {modalContent === "Overtime"
+              ? "Submit Overtime Request"
+              : "Submit Leave Request"}
+          </Typography>
+          <Typography id="modal-description" sx={{ mt: 2 }}>
+            {modalContent === "Overtime"
+              ? "Fill out the details for your overtime request."
+              : "Fill out the details for your leave request."}
+          </Typography>
+
+          {/* Input Fields */}
+          <Box display="flex" flexDirection="column" gap={2} mt={2}>
+            <TextField label="Reason" variant="outlined" fullWidth />
+            <TextField label="Date" variant="outlined" fullWidth />
+            <TextField
+              label={modalContent === "Overtime" ? "Hours" : "Duration"}
+              variant="outlined"
+              fullWidth
+            />
+          </Box>
+
+          {/* Submit Button */}
+          <Box display="flex" justifyContent="flex-end" mt={3}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleCloseModal}
             >
-              {status}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* LeaveRequest Main Content */}
-      <div>
-        <h3>Leave Request Section</h3>
-        <p>Click the button above to submit or cancel your leave request.</p>
-      </div>
-    </div>
+              Submit
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+    </Box>
   );
 };
 

@@ -36,7 +36,7 @@ function App() {
             {/* Define application routes */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/attendance" element={<Attendance />} />
-            <Route path="/shift-schedule" element={<Shiftschedule />} />
+            <Route path="/shift-schedule" element={  <Shiftschedule />} />
             <Route path="/leave-request" element={<LeaveRequest />} />
             <Route path="/reports" element={<Report />} />
             <Route path="/inbox" element={<Inbox />} />

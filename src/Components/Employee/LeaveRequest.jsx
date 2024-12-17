@@ -18,6 +18,7 @@ const LeaveRequest = () => {
   const [requestType, setRequestType] = useState(""); // Dropdown state
   const [openModal, setOpenModal] = useState(false); // Modal visibility
   const [modalContent, setModalContent] = useState(""); // Modal content
+  const [leaveType, setLeaveType] = useState(""); // Leave type state
 
   // Handle dropdown change
   const handleRequestChange = (event) => {
@@ -30,6 +31,12 @@ const LeaveRequest = () => {
   // Handle modal close
   const handleCloseModal = () => {
     setOpenModal(false);
+    setLeaveType(""); // Reset leave type on modal close
+  };
+
+  // Handle leave type change
+  const handleLeaveTypeChange = (event) => {
+    setLeaveType(event.target.value);
   };
 
   const createCard = (title, content, subtitle) => (
@@ -61,13 +68,51 @@ const LeaveRequest = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
-    { field: "status", headerName: "Status", width: 110 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 110,
+      renderCell: (params) => {
+        const getStatusStyle = (status) => {
+          switch (status) {
+            case "Approved":
+              return {
+                backgroundColor: "green",
+                color: "white",
+                padding: "5px",
+                borderRadius: "5px",
+                textAlign: "center",
+              };
+            case "Rejected":
+              return {
+                backgroundColor: "red",
+                color: "white",
+                padding: "5px",
+                borderRadius: "5px",
+                textAlign: "center",
+              };
+            case "Pending":
+              return {
+                backgroundColor: "yellow",
+                color: "black",
+                padding: "5px",
+                borderRadius: "5px",
+                textAlign: "center",
+              };
+            default:
+              return {};
+          }
+        };
+
+        return <span style={getStatusStyle(params.value)}>{params.value}</span>;
+      },
+    },
     { field: "name", headerName: "Name", width: 110 },
     { field: "leaveType", headerName: "Leave Type", width: 110 },
     { field: "duration", headerName: "Duration", width: 110 },
     { field: "datefrom", headerName: "Date From", width: 110 },
     { field: "dateto", headerName: "Date To", width: 110 },
-    { field: "notes", headerName: "Notes", width: 110 },
+    { field: "notes", headerName: "Reason", width: 110 },
     { field: "addedon", headerName: "Added On", width: 110 },
   ];
 
@@ -188,7 +233,6 @@ const LeaveRequest = () => {
         />
       </Box>
 
-      {/* Modal */}
       <Modal
         open={openModal}
         onClose={handleCloseModal}
@@ -219,15 +263,32 @@ const LeaveRequest = () => {
               : "Fill out the details for your leave request."}
           </Typography>
 
-          {/* Input Fields */}
+          {/* Conditional Input Fields */}
           <Box display="flex" flexDirection="column" gap={2} mt={2}>
+            {modalContent === "Leave" && (
+              <FormControl fullWidth>
+                <InputLabel id="leave-type-label">Leave Type</InputLabel>
+                <Select
+                  labelId="leave-type-label"
+                  value={leaveType}
+                  onChange={handleLeaveTypeChange}
+                  label="Leave Type"
+                >
+                  <MenuItem value="Sick Leave">Sick Leave</MenuItem>
+                  <MenuItem value="Vacation">Vacation</MenuItem>
+                  <MenuItem value="Personal Leave">Personal Leave</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
+                </Select>
+              </FormControl>
+            )}
             <TextField label="Reason" variant="outlined" fullWidth />
             <TextField label="Date" variant="outlined" fullWidth />
-            <TextField
-              label={modalContent === "Overtime" ? "Hours" : "Duration"}
-              variant="outlined"
-              fullWidth
-            />
+            {modalContent === "Overtime" && (
+              <TextField label="Hours" variant="outlined" fullWidth />
+            )}
+            {modalContent === "Leave" && (
+              <TextField label="Duration" variant="outlined" fullWidth />
+            )}
           </Box>
 
           {/* Submit Button */}

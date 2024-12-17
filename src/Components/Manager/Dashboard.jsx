@@ -206,7 +206,7 @@ const Dashboard = () => {
           <h5  style={{ fontSize: "18px" }}>Pending Leave Requests</h5>
         </div>
       </div>
-    </div>
+    </div> 
   );
 };
 

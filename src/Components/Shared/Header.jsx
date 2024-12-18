@@ -69,7 +69,7 @@ const Header = () => {
         <div
           style={{
             position: "relative",
-            marginRight: "20px",
+            marginRight: "30px",
             cursor: "pointer",
           }}
         >

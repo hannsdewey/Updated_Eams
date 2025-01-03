@@ -1,33 +1,55 @@
+/* Ensure overlay covers the entire screen */
 .modal-overlay {
-    position: fixed;
-   
-    
-    display: flex;
-    justify-content: space-between;
-    margin-left: 1070px;
-    margin-top: 190px;
-    font-size: 14px;
+  position: fixed; /* Fixed position to cover the screen */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8); /* Dimmed background with more opacity */
+  z-index: 1000; /* Ensure modal appears above other elements */
+  display: flex;
+  justify-content: center; /* Horizontally center the modal */
+  align-items: center; /* Vertically center the modal */
+}
+
+/* Modal content styles */
+.modal-content {
+  background-color: black; /* Set the modal content background to black */
+  padding: 20px;
+  border-radius: 12px;
+  width: 500px;
+  box-shadow: 0px 6px 12px rgba(255, 255, 255, 0.5); /* Optional light shadow */
+  color: white; /* Set text color to white */
+  text-align: center;
+  animation: slideIn 0.3s ease-in-out; /* Add animation for appearance */
+  z-index: 1001; /* Ensure modal content appears above the overlay */
+}
+
+/* Button styles */
+button {
+  padding: 10px 20px;
+  background-color: rgb(0, 0, 0);
+  color: black;
+  border: 1px solid gray;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 10px 0;
+}
+
+button:hover {
+  background-color: #000000;
+  font-weight: bold;
+}
+
+/* Fade-in animation for modal */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
   }
-  
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-   justify-content: center;
-    width: 250px;
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
-  
-  button {
-    padding: 8px 16px;
-   background-color: white;
-    color: rgb(63, 62, 62);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  button:hover {
-   color: black;
-   font-weight: bold;
-   
-  }
-  
+}

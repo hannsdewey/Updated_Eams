@@ -31,6 +31,7 @@
     "body-parser": "^1.20.3",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+<<<<<<< HEAD
     "chart.js": "^4.4.7",
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",
@@ -50,6 +51,15 @@
     "react-select": "^5.9.0",
     "recharts": "^2.15.0",
     "styled-components": "^6.1.13"
+=======
+    "date-fns": "^4.1.0",
+    "font-awesome": "^4.7.0",
+    "react": "^18.2.0",
+    "react-datepicker": "^7.5.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.0.2",
+    "react-select": "^5.8.3"
+>>>>>>> 3575f4e8bd0d3f8e64dad875a22ff91a685930c3
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

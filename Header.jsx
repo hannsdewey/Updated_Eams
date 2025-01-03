@@ -17,15 +17,23 @@ const Header = () => {
   }, []);
 
   const fetchNotifications = async () => {
-    const response = await fetch("/api/notifications");
-    const data = await response.json();
-    setNotifications(data.notifications);
+    try {
+      const response = await fetch("/api/notifications");
+      const data = await response.json();
+      setNotifications(data.notifications);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
   };
 
   const fetchUserProfile = async () => {
-    const response = await fetch("/api/user");
-    const data = await response.json();
-    setUser(data);
+    try {
+      const response = await fetch("/api/user");
+      const data = await response.json();
+      setUser(data);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
   };
 
   const toggleModal = () => {
@@ -44,7 +52,8 @@ const Header = () => {
   };
 
   const logout = () => {
-    // Implement logout logic here (e.g., clear user data, redirect to login)
+    // Clear user data (logout)
+    localStorage.removeItem("isLoggedIn"); // Remove login status from localStorage
     navigate("/login"); // Redirect to login page
     toggleModal(); // Close the modal
   };
@@ -109,24 +118,11 @@ const Header = () => {
           )}
         </div>
 
-        {/* Settings Icon */}
-        <div
-          style={{
-            marginRight: "20px",
-            cursor: "pointer",
-          }}
-        >
-          <i
-            className="fa fa-cogs"
-            style={{ fontSize: "20px", color: "#000" }}
-          ></i>
-        </div>
-
         {/* Profile Icon */}
         <div style={{ display: "flex", alignItems: "center" }}>
           {user ? (
             <img
-              src={user.profilePicture}
+              src={user?.profilePicture || "/default-avatar.png"} // Fallback image
               alt="Profile"
               style={{
                 width: "32px",

@@ -1,75 +1,90 @@
-import './App.css';
+import React, { useState } from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import "./App.css";
 
-function App() {
+function LoginForm({ setRole }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Hardcoded credentials (in a real app, this should come from an API or database)
+  const users = [
+    { username: "Jazz22", password: "manager123", role: "Manager" },
+    { username: "eugen2", password: "ceo123", role: "CEO" },
+    { username: "hanndewey", password: "employee123", role: "Employee" },
+  ];
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    const foundUser = users.find(
+      (user) => user.username === username && user.password === password
+    );
+
+    if (foundUser) {
+      setRole(foundUser.role); // Set the role in the parent component (App.js)
+      setErrorMessage("");
+    } else {
+      setErrorMessage("Invalid username or password.");
+    }
+  };
+
   return (
-    <section className="bgform">
-      <div className="flex">
-       
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="head">
-              Sign in to your account
-            </h1>
-            <p>Please enter your details.</p>
-            <form className="loginform" action="#">
-              <div>
-                <label
-                  htmlFor="email"
-                  className="email"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="emailholder"
-                  placeholder="name@company.com"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="password"
-                  className="password"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className="passwordplaceholder"
-                />
-              </div>
-              <div class="align">
-  <div>
-    <input type="checkbox" id="remember" class="remembercheckbox" />
-  </div>
-  <div>
-    <label for="remember" class="remember">Remember me</label>
-  </div>
-  <div>
-    <a href="#" class="forgotpass">Forgot password?</a>
-  </div>
-</div>
-
-              <button
-                type="submit"
-                className="submit-btn"
-                
-              >
-                <a href='my-app/src/Manager/app.jsx'></a>
-                Sign in
-              </button>
-              
-            </form>
-          </div>
+    <div className="login-container">
+      <div className="login-form-container">
+        <div className="form-card">
+          <h1 className="form-title">Welcome Back</h1>
+          <p className="form-subtitle">Sign in to your account</p>
+          <form onSubmit={handleLogin}>
+            <div className="input-group">
+              <label htmlFor="username" className="input-label">
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                className="input-field"
+                placeholder="Enter your username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="password" className="input-label">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                className="input-field"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div className="options">
+              <label className="remember-option">
+                <input type="checkbox" className="checkbox" />
+                Remember me
+              </label>
+              <a href="#" className="forgot-password">
+                Forgot password?
+              </a>
+            </div>
+            <button type="submit" className="submit-btn">
+              Sign in
+            </button>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+          </form>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
-export default Login;
+export default LoginForm;

@@ -136,7 +136,6 @@ const Header = () => {
       {isModalOpen && (
         <div className="modal-overlay" onClick={toggleModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          
             <button onClick={toggleModal}>View Profile</button>
             <button onClick={toggleModal}>Settings</button>
             <button onClick={toggleModal}>Logout</button>

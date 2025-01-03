@@ -1,0 +1,14 @@
+.ceo-role {
+  background-color: red !important;
+  color: white;
+}
+
+.manager-role {
+  background-color: green !important;
+  color: white;
+}
+
+.employee-role {
+  background-color: blue !important;
+  color: white;
+}

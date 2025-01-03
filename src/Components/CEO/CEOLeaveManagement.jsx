@@ -84,7 +84,7 @@ const CEOLeaveManagement = () => {
   // Handle approve/reject action for leave requests
   const handleLeaveStatusChange = (status) => {
     const updatedRequests = leaveRequests.map((request) =>
-      request.id === selectedRequest.id
+      request.id === selectedRequest.idgit
         ? { ...request, status: status, comments: comments } // Save comments along with the status
         : request
     );

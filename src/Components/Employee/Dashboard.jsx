@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import BarChartComponent from "./Barchart"; // Ensure the path is correct
@@ -185,38 +184,7 @@ const Dashboard = () => {
         <AttendanceGrid />
       </Box>
     </Box>
-=======
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-
-import Login from "./Login";
-import ManagerDashboard from "./Components/Manager/Dashboard";
-import EmployeeDashboard from "./Components/Employee/Dashboard";
-import LeaveRequest from "./Components/Manager/LeaveRequest";
-
-// Main App Component
-function App() {
-  return (
-    <Router>
-      <Routes>
-        {/* Login Route */}
-        <Route path="/" element={<Login />} />
-
-        {/* Manager Dashboard Route */}
-        <Route path="/manager" element={<ManagerDashboard />} />
-
-        {/* CEO Dashboard Route */}
-        <Route path="/ceo" element={<LeaveRequest />} />
-
-        {/* Employee Dashboard Route */}
-        <Route path="/employee" element={<EmployeeDashboard />} />
-
-        {/* Redirect to Login if no match */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Router>
->>>>>>> 3575f4e8bd0d3f8e64dad875a22ff91a685930c3
   );
-}
+};
 
-export default App;
+export default Dashboard;
